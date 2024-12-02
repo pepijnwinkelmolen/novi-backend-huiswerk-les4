@@ -1,60 +1,54 @@
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Bonus {
 
     public static void main(String[] args) {
-
-        // Onderstaande code is uitgecommentarieerd. Haal de code uit de comment (delete /* en */) om aan de slag te gaan met de bonus
-        // In de code staan op verschillende plekken comments tussen "/*...*/" als hint wat je moet doen
-
-
-        HashSet<Integer> secretnumber = randomnumbergenerator();
-        String stringnumber = setToStringConverter(secretnumber);
-        System.out.println(stringnumber);
-        feedback(/*vul hier het juiste argument in*/);
+        HashSet<Integer> secretNumber = randomNumberGenerator();
+        String stringNumber = setToStringConverter(secretNumber);
+        System.out.println(stringNumber);
+        feedback(stringNumber);
 
     }
 
-    public static void/*moet dit returntype "void" zijn of wat anders?*/ randomnumbergenerator(/*Heeft deze methode nog parameter(s) nodig?*/){
-         /*
-        Vul hier de body van de methode in.
+    public static HashSet<Integer> randomNumberGenerator(){
+        Random random = new Random();
+        HashSet<Integer> numbers = new HashSet<>();
 
-        Stappenplan:
-        - Maak een nieuwe variabele van type Random. (Tip: Zoek op internet hoe je Random kunt gebruiken)
-        - Maak een nieuwe variabele van type HashSet.
-        - Schrijf een while-loop om 4 random nummers aan de hashset toe te voegen
-        - return de hashset
-         */
+        while (numbers.size() < 4) {
+            numbers.add(random.nextInt(10));
+        }
+
+        return numbers;
     }
 
-    public static void/*moet dit returntype "void" zijn of wat anders?*/ setToStringConverter(/*Heeft deze methode nog parameter(s) nodig?*/){
-        /*
-        Vul hier de body van de methode in.
+    public static String setToStringConverter(HashSet<Integer> secretNumber){
+        StringBuilder convertedNumber = new StringBuilder();
 
-        Stappenplan:
-        - Maak als eerst een String variabele met als waarde een lege String. (of gebruik een StringBuilder)
-        - Schrijf vervolgens een for-loop om de items in de hashset een voor een aan de String variabele toe te voegen.
-        - Return de (gevulde) String variabele
-         */
+        for (Integer number : secretNumber) {
+            convertedNumber.append(number);
+        }
+
+        return convertedNumber.toString();
     }
 
 
 
-    public static void/*moet dit "void" zijn of wat anders?*/ feedback(String stringnumber) {
+    public static void feedback(String secretNumber) {
         Scanner scanner = new Scanner(System.in);
         StringBuilder feedback = new StringBuilder();
         System.out.println("+ = juiste nummer op de juiste plek, O = juiste nummer verkeerde plek, X = verkeerde nummer");
         System.out.println("Doe een gok, Let op vul 4 getallen in.");
         String guess = scanner.nextLine();
-        if (Objects.equals(guess, stringnumber)) {
+        if (Objects.equals(guess, secretNumber)) {
             System.out.println("gefeliciteerd je hebt het goed");
         } else {
             for (int i = 0; i < 4; i++) {
-                if (guess.substring(i, i + 1).equals(stringnumber.substring(i, i + 1))) {
+                if (guess.substring(i, i + 1).equals(secretNumber.substring(i, i + 1))) {
                     feedback.append("+");
-                } else if (stringnumber.contains(guess.substring(i, i + 1))) {
+                } else if (secretNumber.contains(guess.substring(i, i + 1))) {
                     feedback.append("0");
                 } else {
                     feedback.append("X");
